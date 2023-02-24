@@ -8,6 +8,10 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+:root {
+  --frame: #0eff02;
+}
+
 .wrapper {
   max-width: 500px;
   margin: 0 auto;
@@ -41,11 +45,11 @@ body {
 }
 
 .selectedBtn {
-  color: green;
+  color: var(--frame);
 }
 
 .selectedUser {
-  border: 3px solid rebeccapurple;
+  border: 3px solid var(--frame);
   transform: scale(1.1);
   transition: 0.5s all ease;
 }

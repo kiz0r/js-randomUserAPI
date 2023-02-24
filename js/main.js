@@ -82,6 +82,8 @@ function createUserItem({
     createUserAgeAndGender(userAge, userGender)
   );
 
+  setFrame(userListItem, userGender);
+
   userListItem.append(
     createUserAvatar(src, `${firstName} ${lastName}`),
     infoWrapper,
@@ -96,7 +98,7 @@ function selectUser() {
 
   selectBtn.classList.add('toSelectBtn');
 
-  selectBtn.innerHTML = '<i class="fa-regular fa-circle-check"></i>';
+  selectBtn.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
 
   selectBtn.onclick = (e) => {
     if (e.currentTarget.parentNode.classList.contains('selectedUser')) {
@@ -111,6 +113,16 @@ function selectUser() {
   return selectBtn;
 }
 
+function setFrame(el, gender) {
+  const borderStyle = '3px solid';
+
+  if (gender === 'male') {
+    el.style.border = `${borderStyle} #02D5FF`;
+  } else {
+    el.style.border = `${borderStyle} #EC02FF`;
+  }
+}
+
 function createUserAvatar(src, alt) {
   const userAvatarEl = document.createElement('img');
 
@@ -118,7 +130,7 @@ function createUserAvatar(src, alt) {
   userAvatarEl.src = src;
   userAvatarEl.alt = alt;
 
-  userAvatarEl.onerror = (e) => {
+  userAvatarEl.onerror = () => {
     userAvatarEl.src = './../img/defaultAvatar.png';
   };
 
