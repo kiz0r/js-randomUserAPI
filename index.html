@@ -4,9 +4,29 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- connecting fontsawesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+    />
+    <!-- connecting .css files -->
     <link rel="stylesheet" href="./css/reset.css" />
     <link rel="stylesheet" href="./css/styles.css" />
-    <title>Weather API</title>
+    <!-- connecting .js files -->
+    <script defer src="./js/main.js"></script>
+    <title>My user generator</title>
   </head>
-  <body></body>
+  <body>
+    <div class="wrapper">
+      <ul class="usersList"></ul>
+      <div class="btnWrapper">
+        <div class="leftBtnBox">
+          <button class="btn toTheFirstPage">1st Page</button>
+          <button class="btn prevBtn">Previous Page</button>
+        </div>
+        <button class="btn nextBtn">Next Page</button>
+      </div>
+    </div>
+  </body>
 </html>
+<!-- <i class="fa-regular fa-circle-check"></i> -->
