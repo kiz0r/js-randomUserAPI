@@ -94,15 +94,17 @@ function createUserItem({
 function selectUser() {
   const selectBtn = document.createElement('button');
 
-  selectBtn.classList.add('selectBtn');
+  selectBtn.classList.add('toSelectBtn');
 
   selectBtn.innerHTML = '<i class="fa-regular fa-circle-check"></i>';
 
   selectBtn.onclick = (e) => {
-    if (e.currentTarget.classList.contains('selected')) {
-      e.currentTarget.classList.remove('selected');
+    if (e.currentTarget.parentNode.classList.contains('selectedUser')) {
+      e.currentTarget.parentNode.classList.remove('selectedUser');
+      e.currentTarget.classList.remove('selectedBtn');
     } else {
-      e.currentTarget.classList.add('selected');
+      e.currentTarget.parentNode.classList.add('selectedUser');
+      e.currentTarget.classList.add('selectedBtn');
     }
   };
 

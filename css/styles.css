@@ -15,13 +15,14 @@ body {
 }
 
 .userListItem {
-  border: 2px solid black;
+  border: 3px solid black;
   border-radius: 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 1.5em 0;
-  padding: 1em;
+  margin: 2em 0;
+  padding: 1.5em;
+  transition: 0.5s all ease;
 }
 
 .avatar {
@@ -29,8 +30,9 @@ body {
   border-radius: 60px;
 }
 
-.infoWrapper {
-  margin-left: 1em;
+.toSelectBtn {
+  background: none;
+  border: none;
 }
 
 .btnWrapper {
@@ -38,6 +40,12 @@ body {
   justify-content: space-between;
 }
 
-.selected {
-  scale: 110%;
+.selectedBtn {
+  color: green;
+}
+
+.selectedUser {
+  border: 3px solid rebeccapurple;
+  transform: scale(1.1);
+  transition: 0.5s all ease;
 }
