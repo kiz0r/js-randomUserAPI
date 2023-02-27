@@ -3,13 +3,13 @@
 // - Випадкові користувачі https://randomuser.me/api
 // (дока по апі https://randomuser.me/documentation)
 // *Наприклад,
-// --- вивести дані списком;
-// --- налаштувати гортання по сторінках (приклад https://github.com/pecourses/pe2021-2-promise/blob/main/js/index.js);
-// --- додати кнопку <<, тобто перехід першу сторінку;
-// --- додати інформацію про користувача (вік, імейл, ...);
-// --- колір рамки (фону) карткам генерувати залежно від статі користувача;
+// --- вивести дані списком; //* => done
+// --- налаштувати гортання по сторінках (приклад https://github.com/pecourses/pe2021-2-promise/blob/main/js/index.js); //* => done
+// --- додати кнопку <<, тобто перехід першу сторінку; //* => done
+// --- додати інформацію про користувача (вік, імейл, ...); //*  => done
+// --- колір рамки (фону) карткам генерувати залежно від статі користувача; //* => done
 // --- ** зробити можливим вибирати кілька карток, перелік повних імен обраних користувачів приводити в рядок зверху. Вибрані картки підсвічувати;
-// --- застилити картки.
+// --- застилити картки. //* => done
 
 const properties = {
   results: 5,
@@ -17,6 +17,7 @@ const properties = {
   seed: 'students',
 };
 
+const pageWrapper = document.querySelector('.wrapper');
 const [firstPageBtn, prevBtn, nextBtn] = document.querySelectorAll('.btn');
 
 // event listeners and functions of handlers for buttons
@@ -61,6 +62,12 @@ function renderUsers(users) {
   const usersListItems = users.map((u) => createUserItem(u));
 
   usersList.replaceChildren(...usersListItems);
+
+  pageWrapper.prepend(
+    usersListItems.forEach((e) => {
+      selectedUsers(e);
+    })
+  );
 }
 
 function createUserItem({
@@ -69,6 +76,7 @@ function createUserItem({
   email: userEmail,
   dob: { age: userAge },
   gender: userGender,
+  location: { country: userCountry, state: userState, city: userCity },
 }) {
   const userListItem = document.createElement('li');
   const infoWrapper = document.createElement('div');
@@ -78,8 +86,9 @@ function createUserItem({
 
   infoWrapper.append(
     createUserInfo(`${firstName} ${lastName}`),
-    createUserEmail(userEmail),
-    createUserAgeAndGender(userAge, userGender)
+    createUserAgeAndGender(userAge, userGender),
+    createUserLocation(`${userCountry}, ${userState}, ${userCity}`),
+    createUserEmail(userEmail)
   );
 
   setFrame(userListItem, userGender);
@@ -113,6 +122,18 @@ function selectUser() {
   return selectBtn;
 }
 
+function selectedUsers(el) {
+  const selectedUsersField = document.createElement('span');
+  selectedUsersField.classList.add('usersField');
+
+  if (el.classList.contains('selectedUser')) {
+    console.log(el.name.first + ' ' + el.name.last);
+    selectedUsersField.innerHTML += `${el.name.first} ${el.name.last},`;
+  }
+
+  return selectedUsersField;
+}
+
 function setFrame(el, gender) {
   const borderStyle = '3px solid';
 
@@ -137,12 +158,13 @@ function createUserAvatar(src, alt) {
   return userAvatarEl;
 }
 
-function createUserInfo(info) {
-  const userInfoEl = document.createElement('p');
+function createUserInfo(name) {
+  const userNameEl = document.createElement('p');
 
-  userInfoEl.textContent = info;
+  userNameEl.classList.add('userName');
+  userNameEl.textContent = name;
 
-  return userInfoEl;
+  return userNameEl;
 }
 
 function createUserEmail(email) {
@@ -150,7 +172,7 @@ function createUserEmail(email) {
 
   userEmailEl.classList.add('userMail');
   userEmailEl.href = `mailto: ${email}`;
-  userEmailEl.innerHTML = email;
+  userEmailEl.innerHTML = 'User email adress';
 
   return userEmailEl;
 }
@@ -161,6 +183,13 @@ function createUserAgeAndGender(age, gender) {
   userAgeAndGenderEl.textContent = `Gender : ${gender}, ${age} years old.`;
 
   return userAgeAndGenderEl;
+}
+
+function createUserLocation(location) {
+  const userLocationEl = document.createElement('p');
+  userLocationEl.textContent = `Location :  ${location}`;
+
+  return userLocationEl;
 }
 
 getUsers(properties);
