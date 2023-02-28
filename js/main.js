@@ -4,11 +4,11 @@
 // (дока по апі https://randomuser.me/documentation)
 // *Наприклад,
 // --- вивести дані списком; //* => done
-// --- налаштувати гортання по сторінках (приклад https://github.com/pecourses/pe2021-2-promise/blob/main/js/index.js); //* => done
+// --- налаштувати гортання по сторінках (приклад https://github.com/pecoursesй/pe2021-2-promise/blob/main/js/index.js); //* => done
 // --- додати кнопку <<, тобто перехід першу сторінку; //* => done
 // --- додати інформацію про користувача (вік, імейл, ...); //*  => done
 // --- колір рамки (фону) карткам генерувати залежно від статі користувача; //* => done
-// --- ** зробити можливим вибирати кілька карток, перелік повних імен обраних користувачів приводити в рядок зверху. Вибрані картки підсвічувати;
+// --- ** зробити можливим вибирати кілька карток, перелік повних імен обраних користувачів приводити в рядок зверху. Вибрані картки підсвічувати; //* => done
 // --- застилити картки. //* => done
 
 const properties = {
@@ -17,7 +17,7 @@ const properties = {
   seed: 'students',
 };
 
-const pageWrapper = document.querySelector('.wrapper');
+const selectedUsersField = document.querySelector('.selectedUsersField');
 const [firstPageBtn, prevBtn, nextBtn] = document.querySelectorAll('.btn');
 
 // event listeners and functions of handlers for buttons
@@ -59,27 +59,27 @@ function getUsers() {
 function renderUsers(users) {
   const usersList = document.querySelector('.usersList');
 
-  const usersListItems = users.map((u) => createUserItem(u));
-  usersList.replaceChildren(...usersListItems);
+  const usersListItems = users.map((u) => createUserItem(users, u));
 
-  pageWrapper.prepend(
-    usersListItems.forEach((e) => {
-      console.log(e);
-      selectedUsers(e);
-    })
-  );
+  usersList.replaceChildren(...usersListItems);
 }
 
-function createUserItem({
-  name: { first: firstName, last: lastName },
-  picture: { large: src },
-  email: userEmail,
-  dob: { age: userAge },
-  gender: userGender,
-  location: { country: userCountry, state: userState, city: userCity },
-}) {
+function createUserItem(
+  user,
+  {
+    name: { first: firstName, last: lastName },
+    picture: { large: src },
+    email: userEmail,
+    dob: { age: userAge },
+    gender: userGender,
+    location: { country: userCountry, state: userState, city: userCity },
+    login: { uuid: userId },
+  }
+) {
   const userListItem = document.createElement('li');
   const infoWrapper = document.createElement('div');
+
+  userListItem.dataset.userId = `${userId}`;
 
   userListItem.classList.add('userListItem');
   infoWrapper.classList.add('infoWrapper');
@@ -96,13 +96,13 @@ function createUserItem({
   userListItem.append(
     createUserAvatar(src, `${firstName} ${lastName}`),
     infoWrapper,
-    selectUser()
+    selectUser(user)
   );
 
   return userListItem;
 }
 
-function selectUser() {
+function selectUser(users) {
   const selectBtn = document.createElement('button');
 
   selectBtn.classList.add('toSelectBtn');
@@ -117,21 +117,28 @@ function selectUser() {
       e.currentTarget.parentNode.classList.add('selectedUser');
       e.currentTarget.classList.add('selectedBtn');
     }
+    renderSelectedUsers(users, e.currentTarget.parentNode.parentNode);
   };
 
   return selectBtn;
 }
 
-function selectedUsers(el) {
-  const selectedUsersField = document.createElement('span');
-  selectedUsersField.classList.add('usersField');
-
+function selectedUsers(el, user) {
   if (el.classList.contains('selectedUser')) {
-    // console.log(el.name.first + ' ' + el.name.last);
-    selectedUsersField.textContent += ` ${el.name.first} ${el.name.last}, `;
-  }
+    const userIndex = user.findIndex((e) => e.login.uuid === el.dataset.userId);
 
-  return selectedUsersField;
+    selectedUsersField.textContent += ` ${user[userIndex].name.first} ${user[userIndex].name.last}, `;
+  }
+}
+
+function renderSelectedUsers(users, { children: usersList }) {
+  const usersListArr = [...usersList];
+
+  selectedUsersField.textContent = ' ';
+
+  usersListArr.forEach((el) => {
+    selectedUsers(el, users);
+  });
 }
 
 function setFrame(el, gender) {

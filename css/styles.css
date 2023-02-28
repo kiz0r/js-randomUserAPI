@@ -18,6 +18,10 @@ body {
   padding: 1.5em 0;
 }
 
+.selectedUsersField {
+  min-height: 20px;
+}
+
 .userListItem {
   border: 3px solid black;
   border-radius: 15px;
@@ -37,6 +41,21 @@ body {
 
 .infoWrapper {
   width: 450px;
+}
+
+.userName {
+  font-weight: 700;
+  font-size: 18px;
+  /* line-height: 24px; */
+}
+
+.userMail {
+  /* line-height: 24px; */
+  border-bottom: 2px solid #6c3483;
+}
+
+.infoWrapper > p {
+  line-height: 24px;
 }
 
 .toSelectBtn {
