@@ -60,11 +60,11 @@ function renderUsers(users) {
   const usersList = document.querySelector('.usersList');
 
   const usersListItems = users.map((u) => createUserItem(u));
-
   usersList.replaceChildren(...usersListItems);
 
   pageWrapper.prepend(
     usersListItems.forEach((e) => {
+      console.log(e);
       selectedUsers(e);
     })
   );
@@ -127,8 +127,8 @@ function selectedUsers(el) {
   selectedUsersField.classList.add('usersField');
 
   if (el.classList.contains('selectedUser')) {
-    console.log(el.name.first + ' ' + el.name.last);
-    selectedUsersField.innerHTML += `${el.name.first} ${el.name.last},`;
+    // console.log(el.name.first + ' ' + el.name.last);
+    selectedUsersField.textContent += ` ${el.name.first} ${el.name.last}, `;
   }
 
   return selectedUsersField;
